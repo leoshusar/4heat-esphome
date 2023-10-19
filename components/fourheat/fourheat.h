@@ -40,7 +40,7 @@ class FourHeat : public PollingComponent, public uart::UARTDevice {
   std::vector<uint8_t> rx_message_;
 
   bool awaiting_response_{false};
-  bool module_offline_{false};
+  bool module_offline_{true};
   uint8_t current_retry_count_{0};
   uint8_t last_sent_query_index_{0};
   std::vector<uint8_t> tx_message_;
