@@ -1,0 +1,155 @@
+esphome:
+  name: 4heat-controller
+  friendly_name: Stove
+
+uart:
+  tx_pin: GPIO5
+  rx_pin: GPIO4
+  baud_rate: 9600
+
+fourheat:
+  offline_sensor:
+    id: stove_offline
+    name: Stove offline
+
+switch:
+  - id: state_switch
+    name: State
+    platform: fourheat
+    restore_mode: DISABLED
+    datapoint: J30001
+    on_datapoint: J30253
+    off_datapoint: J30254
+    on_data: '1'
+    off_data: '1'
+    parser: |-
+      auto size = data.size();
+      return
+        data[size - 1] != '0' ||
+        data[size - 2] != '0';
+
+text_sensor:
+  - id: state
+    name: State
+    platform: fourheat
+    datapoint: J30001
+    options:
+      0: "OFF"
+      1: "Check Up"
+      2: "Ignition"
+      3: "Stabilization"
+      4: "Ignition"
+      5: "Run"
+      6: "Modulation"
+      7: "Extinguishing"
+      8: "Safety"
+      9: "Block"
+      10: "Recover Ignition"
+      11: "Standby"
+      30: "Ignition"
+      31: "Ignition"
+      32: "Ignition"
+      33: "Ignition"
+      34: "Ignition"
+
+  - id: error
+    name: Error
+    platform: fourheat
+    datapoint: J30002
+    options:
+      0: "No"
+      1: "Safety Thermostat HV1: signalled also in case of Stove OFF"
+      2: "Safety PressureSwitch HV2: signalled with Combustion Fan ON"
+      3: "Extinguishing for Exhausting Temperature lowering"
+      4: "Extinguishing for water over Temperature"
+      5: "Extinguishing for Exhausting over Temperature"
+      6: "unknown"
+      7: "Encoder Error: No Encoder Signal (in case of P25=1 or 2)"
+      8: "Encoder Error: Combustion Fan regulation failed (in case of P25=1 or 2)"
+      9: "Low pressure in to the Boiler"
+      10: "High pressure in to the Boiler Error"
+      11: "DAY and TIME not correct due to prolonged absence of Power Supply"
+      12: "Failed Ignition"
+      13: "Ignition"
+      14: "Ignition"
+      15: "Lack of Voltage Supply"
+      16: "Ignition"
+      17: "Ignition"
+      18: "Lack of Voltage Supply"
+
+button:
+  - id: clear_error
+    name: Clear error
+    platform: fourheat
+    datapoint: J30255
+
+select:
+  - id: power
+    name: Power
+    platform: fourheat
+    datapoint: B20364
+    options:
+      1: "P1"
+      2: "P2"
+      3: "P3"
+      4: "P4"
+      5: "P5"
+      6: "P6"
+      7: "Auto"
+
+binary_sensor:
+  - id: room_thermostat_state
+    name: Room thermostat state
+    platform: fourheat
+    datapoint: J40007
+    parser: return data[data.size() - 3] == '0';
+
+  - id: water_pump_state
+    name: Water pump state
+    platform: fourheat
+    datapoint: J30084
+
+sensor:
+  - id: exhaust_temperature
+    name: Exhaust temperature
+    platform: fourheat
+    datapoint: J30005
+    device_class: temperature
+    unit_of_measurement: °C
+
+  - id: puffer_temperature
+    name: Puffer temperature
+    platform: fourheat
+    datapoint: J30012
+    device_class: temperature
+    unit_of_measurement: °C
+
+  - id: boiler_temperature
+    name: Boiler temperature
+    platform: fourheat
+    datapoint: J30017
+    device_class: temperature
+    unit_of_measurement: °C
+
+  - id: water_pressure
+    name: Water pressure
+    platform: fourheat
+    datapoint: J30020
+    device_class: pressure
+    unit_of_measurement: mbar
+
+  - id: airflow
+    name: Airflow
+    platform: fourheat
+    datapoint: J30026
+    unit_of_measurement: Nr
+
+number:
+  - id: boiler_target_temperature
+    name: Boiler target temperature
+    platform: fourheat
+    datapoint: B20199
+    device_class: temperature
+    unit_of_measurement: °C
+    min_value: 0
+    max_value: 90
