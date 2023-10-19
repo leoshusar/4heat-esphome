@@ -399,7 +399,7 @@ text_sensor:
 - **name** (**Required**, string): The name of the sensor.
 - **datapoint** (**Required**, [datapoint](#custom-variable-types)): The datapoint id of the sensor.
 - **query_datapoint** (*Optional*, [datapoint](#custom-variable-types)): The query datapoint id of the sensor. If not specified, uses `datapoint` with prefix letter decremented by one.
-- **options** (**Required**, Map[int, str]): Provide a mapping from values (int) of this select to options (str) of the datapoint and vice versa. All options and all values have to be unique.
+- **options** (**Required**, Map[int, str]): Provide a mapping from values (int) of this select to options (str) of the datapoint and vice versa. All options have to be unique.
 - **parser** (*Optional*, [lambda](https://esphome.io/guides/automations#config-lambda)): Lambda for custom data parsing logic. Provides `std::vector<uint8_t> data` and must return `int`.
 - All other options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 
