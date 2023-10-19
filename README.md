@@ -2,6 +2,17 @@
 
 This is a custom ESPHome integration for interfacing Tiemme 4Heat controllers.
 
+### Usage
+
+Simply add this to your config:
+
+```yaml
+external_components:
+  source: github://leoshusar/4heat-esphome
+```
+
+And configure your components. You can also skip directly to the [configuration example](example.yaml).
+
 ### Sections
 
 - [Custom variable types](#custom-variable-types)

@@ -2,6 +2,9 @@ esphome:
   name: 4heat-controller
   friendly_name: Stove
 
+external_components:
+  source: github://leoshusar/4heat-esphome
+
 uart:
   tx_pin: GPIO5
   rx_pin: GPIO4
