@@ -151,10 +151,17 @@ void FourHeat::handle_message_() {
 
   ESP_LOGV(TAG, "Received data for %s: %s", id.c_str(), format_hex_pretty(value).c_str());
 
+  bool handled = false;
+
   for (const auto &listener : this->listeners_) {
     if (listener.id == id) {
+      handled = true;
       listener.on_data(value);
     }
+  }
+
+  if (!handled) {
+    ESP_LOGD(TAG, "Listener for %s not found. Data: %s", id.c_str(), format_hex_pretty(value).c_str());
   }
 }
 
