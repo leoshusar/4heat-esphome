@@ -186,6 +186,7 @@ void FourHeat::process_next_tx_message_() {
       } else {
         ESP_LOGW(TAG, "Response timeout, giving up");
         this->current_retry_count_ = 0;
+        this->tx_message_.clear();
         ESP_LOGW(TAG, "Clearing command TX queue, because the module can reappear in an unknown state");
         this->tx_queue_ = {};
 
