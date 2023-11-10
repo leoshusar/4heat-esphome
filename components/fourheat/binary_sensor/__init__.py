@@ -23,7 +23,7 @@ DEPENDENCIES = ["fourheat"]
 FourHeatBinarySensor = fourheat_ns.class_("FourHeatBinarySensor", binary_sensor.BinarySensor, cg.Component)
 
 CONF_TYPE_DATAPOINT = "datapoint"
-CONF_TYPE_OFFLINE = "offline"
+CONF_TYPE_OFFLINE = "module_offline"
 
 CONFIG_SCHEMA = cv.typed_schema(
     {
@@ -52,7 +52,7 @@ CONFIG_SCHEMA = cv.typed_schema(
     },
     lower=True,
     key=CONF_TYPE,
-    default_type="datapoint",
+    default_type=CONF_TYPE_DATAPOINT,
 )
 
 async def to_code(config):
