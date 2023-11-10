@@ -22,11 +22,12 @@ DEPENDENCIES = ["fourheat"]
 
 FourHeatBinarySensor = fourheat_ns.class_("FourHeatBinarySensor", binary_sensor.BinarySensor, cg.Component)
 
-CONF_OFFLINE_SENSOR = "offline_sensor"
+CONF_TYPE_DATAPOINT = "datapoint"
+CONF_TYPE_OFFLINE = "offline"
 
 CONFIG_SCHEMA = cv.typed_schema(
     {
-        "datapoint": binary_sensor.binary_sensor_schema(FourHeatBinarySensor).extend(
+        CONF_TYPE_DATAPOINT: binary_sensor.binary_sensor_schema(FourHeatBinarySensor).extend(
             {
                 cv.GenerateID(CONF_FOURHEAT_ID): cv.use_id(FourHeat),
                 cv.Required(CONF_DATAPOINT): fhcv.datapoint,
@@ -37,10 +38,17 @@ CONFIG_SCHEMA = cv.typed_schema(
         )
         .extend(cv.COMPONENT_SCHEMA),
 
-        "offline": binary_sensor.binary_sensor_schema(
+        CONF_TYPE_OFFLINE: binary_sensor.binary_sensor_schema(
+            FourHeatBinarySensor,
             device_class=DEVICE_CLASS_PROBLEM,
             entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
-        ),
+        )
+        .extend(
+            {
+                cv.GenerateID(CONF_FOURHEAT_ID): cv.use_id(FourHeat),
+            }
+        )
+        .extend(cv.COMPONENT_SCHEMA),
     },
     lower=True,
     key=CONF_TYPE,
@@ -51,8 +59,8 @@ async def to_code(config):
     parent = await cg.get_variable(config[CONF_FOURHEAT_ID])
 
     # Offline sensor
-    if config[CONF_TYPE] == "offline":
-        sens = await binary_sensor.new_binary_sensor(config[CONF_OFFLINE_SENSOR])
+    if config[CONF_TYPE] == CONF_TYPE_OFFLINE:
+        sens = await binary_sensor.new_binary_sensor(config)
         cg.add(parent.set_module_offline_sensor(sens))
     # Datapoint sensor
     else:
