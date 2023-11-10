@@ -48,9 +48,11 @@ void FourHeat::dump_config() {
   ESP_LOGCONFIG(TAG, "4Heat:");
 }
 
+#ifdef USE_BINARY_SENSOR
 void FourHeat::set_module_offline_sensor(binary_sensor::BinarySensor *module_offline_sensor) {
   this->module_offline_sensor_ = module_offline_sensor;
 }
+#endif
 
 void FourHeat::register_query(const std::string &id) {
   std::vector<uint8_t> data;
@@ -249,9 +251,11 @@ bool FourHeat::create_message_(const std::string &id, const std::vector<uint8_t>
 void FourHeat::set_module_offline_(bool offline) {
   this->module_offline_ = offline;
 
+#ifdef USE_BINARY_SENSOR
   if (this->module_offline_sensor_ != nullptr) {
     this->module_offline_sensor_->publish_state(offline);
   }
+#endif
 }
 
 }  // namespace fourheat
