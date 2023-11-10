@@ -11,9 +11,6 @@ uart:
   baud_rate: 9600
 
 fourheat:
-  offline_sensor:
-    id: stove_offline
-    name: Stove offline
 
 switch:
   - id: state_switch
@@ -101,6 +98,11 @@ select:
       7: "Auto"
 
 binary_sensor:
+  - id: stove_offline
+    name: Stove offline
+    platform: fourheat
+    type: module_offline
+
   - id: room_thermostat_state
     name: Room thermostat state
     platform: fourheat
