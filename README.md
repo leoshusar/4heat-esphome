@@ -134,13 +134,10 @@ uart:
   baud_rate: 9600
 
 fourheat:
-  offline_sensor:
-    name: Stove offline
 ```
 
 ### Configuration variables:
 
-- **offline_sensor** (*Optional*): Used for indicating if the 4Heat controller is offline. All options from [Binary Sensor](https://esphome.io/components/binary_sensor/#base-binary-sensor-configuration).
 - **update_interval** (*Optional*, [Time](https://esphome.io/guides/configuration-types#config-time)): The interval to query all sensors. Defaults to 15s.
 
 
@@ -152,17 +149,28 @@ Requires FourHeat Component to be configured.
 
 ```yaml
 binary_sensor:
+  # Datapoint binary sensor
   - platform: fourheat
     name: My Binary Sensor
     datapoint: J30000
     query_datapoint: I30000
     parser: return data[data.size() - 1] != '0';
+
+  # Offline sensor
+  - platform: fourheat
+    name: Module Offline Sensor
+    type: module_offline
 ```
 
 ### Configuration variables:
 
 - **id** (*Optional*, [ID](https://esphome.io/guides/configuration-types#config-id)): Manually specify the ID used for code generation.
 - **name** (**Required**, string): The name of the binary sensor.
+- **type** (*Optional*, enum): `binary_sensor` type. Defaults to `datapoint`.
+  - `datapoint`: datapoint sensor.
+  - `module_offline`: indicates if the 4Heat controller is offline.
+
+### Datapoint
 - **datapoint** (**Required**, [datapoint](#custom-variable-types)): The datapoint id of the binary sensor.
 - **query_datapoint** (*Optional*, [datapoint](#custom-variable-types)): The query datapoint id of the binary sensor. If not specified, uses `datapoint` with prefix letter decremented by one.
 - **parser** (*Optional*, [lambda](https://esphome.io/guides/automations#config-lambda)): Lambda for custom data parsing logic. Provides `std::vector<uint8_t> data` and must return `bool`.

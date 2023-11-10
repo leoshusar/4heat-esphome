@@ -1,7 +1,12 @@
 #pragma once
 
 #include "esphome/core/component.h"
+#include "esphome/core/defines.h"
+
+#ifdef USE_BINARY_SENSOR
 #include "esphome/components/binary_sensor/binary_sensor.h"
+#endif
+
 #include "esphome/components/uart/uart.h"
 
 #include <queue>
@@ -22,7 +27,9 @@ class FourHeat : public PollingComponent, public uart::UARTDevice {
   void update() override;
   void dump_config() override;
 
+#ifdef USE_BINARY_SENSOR
   void set_module_offline_sensor(binary_sensor::BinarySensor *module_offline_sensor);
+#endif
   void register_query(const std::string &id);
   void register_listener(const std::string &id, const std::function<void(const std::vector<uint8_t>)> &func);
 
@@ -33,7 +40,9 @@ class FourHeat : public PollingComponent, public uart::UARTDevice {
   void send_bool_value(const std::string &id, bool value);
 
  protected:
+#ifdef USE_BINARY_SENSOR
   binary_sensor::BinarySensor *module_offline_sensor_{nullptr};
+#endif
 
   uint32_t last_rx_char_timestamp_{0};
   uint32_t last_tx_message_timestamp_{0};
