@@ -126,6 +126,8 @@ But I recommend switching to ESPHome, if you can. Their mobile app is... not gre
 
 The base component which handles all UART communication. Requires [UART Bus](https://esphome.io/components/uart#uart).
 
+Be aware that `UART0` is by default used by the `logger` component. If you want to use it for `fourheat`, you either need to disable logging into serial or change the `logger` UART to other one.
+
 ```yaml
 # Example configuration entry
 uart:
@@ -134,6 +136,13 @@ uart:
   baud_rate: 9600
 
 fourheat:
+```
+
+To disable serial logging:
+
+```yaml
+logger:
+  baud_rate: 0
 ```
 
 ### Configuration variables:
