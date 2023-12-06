@@ -54,6 +54,33 @@ void FourHeat::set_module_offline_sensor(binary_sensor::BinarySensor *module_off
 }
 #endif
 
+void FourHeat::set_pre_query_sequence(const std::vector<std::string> &sequence) {
+  for (int i = 0; i < sequence.size(); i++) {
+    const auto &item = sequence[i];
+
+    std::string id;
+    std::vector<uint8_t> value;
+
+    if (item.size() == ID_LENGTH) {
+      id = item;
+    } else if (item.size() == ID_LENGTH + DATA_LENGTH) {
+      id = std::string(item.begin(), item.begin() + ID_LENGTH);
+      value = std::vector<uint8_t>(item.begin() + ID_LENGTH, item.end());
+    } else {
+      ESP_LOGW(TAG, "Invalid pre-query sequence item: %s", item.c_str());
+      continue;
+    }
+
+    std::vector<uint8_t> message;
+
+    if (!create_message_(id, value, message)) {
+      continue;
+    }
+
+    this->queries_.insert(this->queries_.begin() + i, message);
+  }
+}
+
 void FourHeat::register_query(const std::string &id) {
   std::vector<uint8_t> data;
 

@@ -30,6 +30,7 @@ class FourHeat : public PollingComponent, public uart::UARTDevice {
 #ifdef USE_BINARY_SENSOR
   void set_module_offline_sensor(binary_sensor::BinarySensor *module_offline_sensor);
 #endif
+  void set_pre_query_sequence(const std::vector<std::string> &sequence);
   void register_query(const std::string &id);
   void register_listener(const std::string &id, const std::function<void(const std::vector<uint8_t>)> &func);
 

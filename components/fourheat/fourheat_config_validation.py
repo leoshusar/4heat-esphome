@@ -4,6 +4,8 @@ datapoint = cv.All(cv.string, cv.Length(min=6, max=6))
 
 data = cv.All(cv.string, cv.Length(min=1, max=12))
 
+message = cv.All(cv.string, cv.Length(min=18, max=18))
+
 def ensure_dict(value):
     if not isinstance(value, dict):
         raise cv.Invalid("expected a dictionary")

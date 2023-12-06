@@ -6,6 +6,8 @@ from esphome.const import CONF_ID
 from esphome.core import Lambda
 from esphome.cpp_generator import LambdaExpression, SafeExpType
 
+from . import fourheat_config_validation as fhcv
+
 DEPENDENCIES = ["uart"]
 
 fourheat_ns = cg.esphome_ns.namespace("fourheat")
@@ -17,10 +19,19 @@ CONF_DATAPOINT = "datapoint"
 CONF_PARSER = "parser"
 CONF_QUERY_DATAPOINT = "query_datapoint"
 
+CONF_PRE_QUERY_SEQUENCE = "pre_query_sequence"
+
 CONFIG_SCHEMA = (
     cv.Schema(
         {
             cv.GenerateID(): cv.declare_id(FourHeat),
+
+            cv.Optional(CONF_PRE_QUERY_SEQUENCE): cv.ensure_list(
+                cv.Any(
+                    fhcv.datapoint,
+                    fhcv.message,
+                ),
+            ),
         }
     )
     .extend(cv.polling_component_schema("15s"))
@@ -31,6 +42,9 @@ async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
     await uart.register_uart_device(var, config)
+
+    if CONF_PRE_QUERY_SEQUENCE in config:
+        cg.add(var.set_pre_query_sequence(config[CONF_PRE_QUERY_SEQUENCE]))
 
 async def get_parser_expression(value: Lambda, return_type: SafeExpType) -> Generator[LambdaExpression, None, None]:
     return await cg.process_lambda(
