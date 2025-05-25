@@ -1,10 +1,10 @@
 #pragma once
 
 #include "esphome/core/component.h"
+#include "esphome/core/optional.h"
+#include "esphome/components/fourheat/common.h"
 #include "esphome/components/fourheat/fourheat.h"
 #include "esphome/components/switch/switch.h"
-
-#include <optional>
 
 namespace esphome {
 namespace fourheat {
@@ -28,9 +28,9 @@ class FourHeatSwitch : public switch_::Switch, public Component {
  protected:
   FourHeat *parent_;
   std::string datapoint_id_;
-  std::optional<std::string> query_datapoint_id_;
+  esphome::optional<std::string> query_datapoint_id_;
 
-  std::optional<parser_t<bool>> parser_;
+  esphome::optional<parser_t<bool>> parser_;
 
   optional<std::string> on_datapoint_id_;
   optional<std::string> off_datapoint_id_;

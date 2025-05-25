@@ -2,7 +2,8 @@
 
 #include <ctype.h>
 #include <functional>
-#include <optional>
+
+#include "esphome/core/optional.h"
 
 template<typename T>
-using parser_t = std::function<std::optional<T>(const std::vector<uint8_t> &)>;
+using parser_t = std::function<esphome::optional<T>(const std::vector<uint8_t> &)>;

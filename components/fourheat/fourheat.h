@@ -1,5 +1,7 @@
 #pragma once
 
+#include <queue>
+
 #include "esphome/core/component.h"
 #include "esphome/core/defines.h"
 
@@ -8,8 +10,6 @@
 #endif
 
 #include "esphome/components/uart/uart.h"
-
-#include <queue>
 
 namespace esphome {
 namespace fourheat {

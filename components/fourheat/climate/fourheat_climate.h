@@ -1,11 +1,10 @@
 #pragma once
 
 #include "esphome/core/component.h"
+#include "esphome/core/optional.h"
 #include "esphome/components/climate/climate.h"
 #include "esphome/components/fourheat/common.h"
 #include "esphome/components/fourheat/fourheat.h"
-
-#include <optional>
 
 namespace esphome {
 namespace fourheat {
@@ -38,18 +37,18 @@ class FourHeatClimate : public climate::Climate, public Component {
   std::string datapoint_id_;
   std::string current_temperature_datapoint_id_;
   std::string target_temperature_datapoint_id_;
-  std::optional<std::string> query_datapoint_id_;
-  std::optional<std::string> query_current_temperature_datapoint_id_;
-  std::optional<std::string> query_target_temperature_datapoint_id_;
+  esphome::optional<std::string> query_datapoint_id_;
+  esphome::optional<std::string> query_current_temperature_datapoint_id_;
+  esphome::optional<std::string> query_target_temperature_datapoint_id_;
 
-  std::optional<parser_t<bool>> parser_;
-  std::optional<parser_t<int>> current_temperature_parser_;
-  std::optional<parser_t<int>> target_temperature_parser_;
+  esphome::optional<parser_t<bool>> parser_;
+  esphome::optional<parser_t<int>> current_temperature_parser_;
+  esphome::optional<parser_t<int>> target_temperature_parser_;
 
-  std::optional<std::string> on_datapoint_id_;
-  std::optional<std::string> off_datapoint_id_;
-  std::optional<std::string> on_data_;
-  std::optional<std::string> off_data_;
+  esphome::optional<std::string> on_datapoint_id_;
+  esphome::optional<std::string> off_datapoint_id_;
+  esphome::optional<std::string> on_data_;
+  esphome::optional<std::string> off_data_;
 
   void control(const climate::ClimateCall &call) override;
   climate::ClimateTraits traits() override;

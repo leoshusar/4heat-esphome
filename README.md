@@ -67,7 +67,7 @@ Someone [here](https://www.solarweb.net/forosolar/usuarios-biomasa/56621-comunic
 
 ### Custom parsers
 
-Every component supports custom data parser. You will get `std::vector<uint8_t> data` to work with, with only the data part of the received message (without the datapoint ID), and you must return a value of the correct type. If you don't want to return anything (you receive data you don't expect), return `{}` - empty `std::optional`.
+Every component supports custom data parser. You will get `std::vector<uint8_t> data` to work with, with only the data part of the received message (without the datapoint ID), and you must return a value of the correct type. If you don't want to return anything (you receive data you don't expect), return `{}` - empty `esphome::optional`.
 
 If your parser doesn't return any value, the default one is then **not** called.
 
