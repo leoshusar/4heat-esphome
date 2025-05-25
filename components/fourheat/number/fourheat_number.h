@@ -1,11 +1,10 @@
 #pragma once
 
 #include "esphome/core/component.h"
+#include "esphome/core/optional.h"
 #include "esphome/components/fourheat/common.h"
 #include "esphome/components/fourheat/fourheat.h"
 #include "esphome/components/number/number.h"
-
-#include <optional>
 
 namespace esphome {
 namespace fourheat {
@@ -24,9 +23,9 @@ class FourHeatNumber : public number::Number, public Component {
  protected:
   FourHeat *parent_;
   std::string datapoint_id_;
-  std::optional<std::string> query_datapoint_id_;
+  esphome::optional<std::string> query_datapoint_id_;
 
-  std::optional<parser_t<int>> parser_;
+  esphome::optional<parser_t<int>> parser_;
 
   void control(float value) override;
   

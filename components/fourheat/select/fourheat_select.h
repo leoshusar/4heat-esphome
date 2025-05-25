@@ -1,12 +1,13 @@
 #pragma once
 
+#include <map>
+#include <optional>
+
 #include "esphome/core/component.h"
+#include "esphome/core/optional.h"
 #include "esphome/components/fourheat/common.h"
 #include "esphome/components/fourheat/fourheat.h"
 #include "esphome/components/select/select.h"
-
-#include <map>
-#include <optional>
 
 namespace esphome {
 namespace fourheat {
@@ -29,9 +30,9 @@ class FourHeatSelect : public select::Select, public Component {
   FourHeat *parent_;
   bool optimistic_{false};
   std::string datapoint_id_;
-  std::optional<std::string> query_datapoint_id_;
+  esphome::optional<std::string> query_datapoint_id_;
 
-  std::optional<parser_t<int>> parser_;
+  esphome::optional<parser_t<int>> parser_;
 
   std::map<int, std::string> options_;
 

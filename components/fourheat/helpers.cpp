@@ -34,7 +34,7 @@ bool parse_int(const std::vector<uint8_t> &data, int &value) {
   return true;
 }
 
-const std::string get_query_datapoint_id(const std::string &datapoint_id, const std::optional<std::string> &query_datapoint_id) {
+const std::string get_query_datapoint_id(const std::string &datapoint_id, const esphome::optional<std::string> &query_datapoint_id) {
   if (query_datapoint_id.has_value()) {
     return query_datapoint_id.value();
   }
@@ -46,7 +46,7 @@ const std::string get_query_datapoint_id(const std::string &datapoint_id, const 
 }
 
 template<>
-std::optional<bool> parse(const std::optional<parser_t<bool>> &parser, const std::vector<uint8_t> &data) {
+esphome::optional<bool> parse(const esphome::optional<parser_t<bool>> &parser, const std::vector<uint8_t> &data) {
   if (parser.has_value()) {
     return parser.value()(data);
   }
@@ -54,14 +54,14 @@ std::optional<bool> parse(const std::optional<parser_t<bool>> &parser, const std
   bool value;
 
   if (!parse_bool(data, value)) {
-    return std::nullopt;
+    return esphome::nullopt;
   }
 
   return value;
 }
 
 template<>
-std::optional<int> parse(const std::optional<parser_t<int>> &parser, const std::vector<uint8_t> &data) {
+esphome::optional<int> parse(const esphome::optional<parser_t<int>> &parser, const std::vector<uint8_t> &data) {
   if (parser.has_value()) {
     return parser.value()(data);
   }
@@ -69,7 +69,7 @@ std::optional<int> parse(const std::optional<parser_t<int>> &parser, const std::
   int value;
 
   if (!parse_int(data, value)) {
-    return std::nullopt;
+    return esphome::nullopt;
   }
 
   return value;
