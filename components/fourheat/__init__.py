@@ -5,6 +5,7 @@ from esphome.components import uart
 from esphome.const import CONF_ID
 from esphome.core import Lambda
 from esphome.cpp_generator import LambdaExpression, SafeExpType
+from esphome.cpp_types import optional
 
 DEPENDENCIES = ["uart"]
 
@@ -41,5 +42,5 @@ async def get_parser_expression(value: Lambda, return_type: SafeExpType) -> Gene
                 "data",
             ),
         ],
-        return_type=cg.std_ns.class_("optional").template(return_type)
+        return_type=cg.optional.template(return_type)
     )
