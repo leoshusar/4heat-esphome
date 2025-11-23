@@ -32,9 +32,8 @@ CONF_ON_DATA = "on_data"
 CONF_OFF_DATA = "off_data"
 
 CONFIG_SCHEMA = (
-    climate.CLIMATE_SCHEMA.extend(
+    climate.climate_schema(FourHeatClimate).extend(
         {
-            cv.GenerateID(): cv.declare_id(FourHeatClimate),
             cv.GenerateID(CONF_FOURHEAT_ID): cv.use_id(FourHeat),
             cv.Required(CONF_DATAPOINT): fhcv.datapoint,
             cv.Required(CONF_CURRENT_TEMPERATURE_DATAPOINT): fhcv.datapoint,
