@@ -37,21 +37,21 @@ void FourHeatClimate::dump_config() {
 
 void FourHeatClimate::set_fourheat_parent(FourHeat *parent) { this->parent_ = parent; }
 
-void FourHeatClimate::set_datapoint_id(const std::string datapoint_id) { this->datapoint_id_ = datapoint_id; }
-void FourHeatClimate::set_current_temperature_datapoint_id(const std::string datapoint_id) { this->current_temperature_datapoint_id_ = datapoint_id; }
-void FourHeatClimate::set_target_temperature_datapoint_id(const std::string datapoint_id) { this->target_temperature_datapoint_id_ = datapoint_id; }
-void FourHeatClimate::set_query_datapoint_id(const std::string datapoint_id) { this->query_datapoint_id_ = datapoint_id; }
-void FourHeatClimate::set_query_current_temperature_datapoint_id(const std::string datapoint_id) { this->query_current_temperature_datapoint_id_ = datapoint_id; }
-void FourHeatClimate::set_query_target_temperature_datapoint_id(const std::string datapoint_id) { this->query_target_temperature_datapoint_id_ = datapoint_id; }
+void FourHeatClimate::set_datapoint_id(std::string datapoint_id) { this->datapoint_id_ = std::move(datapoint_id); }
+void FourHeatClimate::set_current_temperature_datapoint_id(std::string datapoint_id) { this->current_temperature_datapoint_id_ = std::move(datapoint_id); }
+void FourHeatClimate::set_target_temperature_datapoint_id(std::string datapoint_id) { this->target_temperature_datapoint_id_ = std::move(datapoint_id); }
+void FourHeatClimate::set_query_datapoint_id(std::string datapoint_id) { this->query_datapoint_id_ = std::move(datapoint_id); }
+void FourHeatClimate::set_query_current_temperature_datapoint_id(std::string datapoint_id) { this->query_current_temperature_datapoint_id_ = std::move(datapoint_id); }
+void FourHeatClimate::set_query_target_temperature_datapoint_id(std::string datapoint_id) { this->query_target_temperature_datapoint_id_ = std::move(datapoint_id); }
 
 void FourHeatClimate::set_parser(const parser_t<bool> &parser) { this->parser_ = parser; }
 void FourHeatClimate::set_current_temperature_parser(const parser_t<int> &parser) { this->current_temperature_parser_ = parser; }
 void FourHeatClimate::set_target_temperature_parser(const parser_t<int> &parser) { this->target_temperature_parser_ = parser; }
 
-void FourHeatClimate::set_on_datapoint_id(const std::string datapoint_id) { this->on_datapoint_id_ = datapoint_id; }
-void FourHeatClimate::set_off_datapoint_id(const std::string datapoint_id) { this->off_datapoint_id_ = datapoint_id; }
-void FourHeatClimate::set_on_data(const std::string data) { this->on_data_ = data; }
-void FourHeatClimate::set_off_data(const std::string data) { this->off_data_ = data; }
+void FourHeatClimate::set_on_datapoint_id(std::string datapoint_id) { this->on_datapoint_id_ = std::move(datapoint_id); }
+void FourHeatClimate::set_off_datapoint_id(std::string datapoint_id) { this->off_datapoint_id_ = std::move(datapoint_id); }
+void FourHeatClimate::set_on_data(std::string data) { this->on_data_ = std::move(data); }
+void FourHeatClimate::set_off_data(std::string data) { this->off_data_ = std::move(data); }
 
 void FourHeatClimate::control(const climate::ClimateCall &call) {
   if (call.get_mode().has_value()) {
