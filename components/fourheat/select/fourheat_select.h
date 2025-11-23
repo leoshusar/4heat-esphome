@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <optional>
 
 #include "esphome/core/component.h"
 #include "esphome/core/optional.h"
