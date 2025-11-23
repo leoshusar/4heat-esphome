@@ -27,8 +27,8 @@ void FourHeatNumber::dump_config() {
 }
 
 void FourHeatNumber::set_fourheat_parent(FourHeat *parent) { this->parent_ = parent; }
-void FourHeatNumber::set_datapoint_id(const std::string datapoint_id) { this->datapoint_id_ = datapoint_id; }
-void FourHeatNumber::set_query_datapoint_id(const std::string datapoint_id) { this->query_datapoint_id_ = datapoint_id; }
+void FourHeatNumber::set_datapoint_id(std::string datapoint_id) { this->datapoint_id_ = std::move(datapoint_id); }
+void FourHeatNumber::set_query_datapoint_id(std::string datapoint_id) { this->query_datapoint_id_ = std::move(datapoint_id); }
 
 void FourHeatNumber::set_parser(const parser_t<int> &parser) { this->parser_ = parser; }
 

@@ -15,15 +15,15 @@ class FourHeatSwitch : public switch_::Switch, public Component {
   void dump_config() override;
 
   void set_fourheat_parent(FourHeat *parent);
-  void set_datapoint_id(const std::string datapoint_id);
-  void set_query_datapoint_id(const std::string datapoint_id);
+  void set_datapoint_id(std::string datapoint_id);
+  void set_query_datapoint_id(std::string datapoint_id);
 
   void set_parser(const parser_t<bool> &parser);
 
-  void set_on_datapoint_id(const std::string datapoint_id);
-  void set_off_datapoint_id(const std::string datapoint_id);
-  void set_on_data(const std::string data);
-  void set_off_data(const std::string data);
+  void set_on_datapoint_id(std::string datapoint_id);
+  void set_off_datapoint_id(std::string datapoint_id);
+  void set_on_data(std::string data);
+  void set_off_data(std::string data);
 
  protected:
   FourHeat *parent_;

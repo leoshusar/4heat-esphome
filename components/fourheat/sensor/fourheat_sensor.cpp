@@ -23,8 +23,8 @@ void FourHeatSensor::dump_config() {
 }
 
 void FourHeatSensor::set_fourheat_parent(FourHeat *parent) { this->parent_ = parent; }
-void FourHeatSensor::set_datapoint_id(const std::string datapoint_id) { this->datapoint_id_ = datapoint_id; }
-void FourHeatSensor::set_query_datapoint_id(const std::string datapoint_id) { this->query_datapoint_id_ = datapoint_id; }
+void FourHeatSensor::set_datapoint_id(std::string datapoint_id) { this->datapoint_id_ = std::move(datapoint_id); }
+void FourHeatSensor::set_query_datapoint_id(std::string datapoint_id) { this->query_datapoint_id_ = std::move(datapoint_id); }
 
 void FourHeatSensor::set_parser(const parser_t<int> &parser) { this->parser_ = parser; }
 
