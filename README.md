@@ -148,7 +148,8 @@ logger:
 ### Configuration variables:
 
 - **update_interval** (*Optional*, [Time](https://esphome.io/guides/configuration-types#config-time)): The interval to query all sensors. Defaults to 15s.
-<br>*You will likely never need to modify the values below. Only in case your 4Heat controller struggles with the defaults, try to increase some values. See also [#26](https://github.com/leoshusar/4heat-esphome/issues/26).*
+
+&nbsp;&nbsp;*You will likely never need to modify the values below. Only in case your 4Heat controller struggles with the defaults, try to increase some values. See also [#26](https://github.com/leoshusar/4heat-esphome/issues/26).*
 - **tx_throttle** (*Optional*): Minimum delay between sending consecutive queries to the 4Heat controller. Defaults to `10`. Must be between `5` and `150`.
 - **rx_timeout** (*Optional*): Timeout for receiving response bytes from the 4Heat controller. Defaults to `100`. Must be between `50` and `500`.
 - **response_timeout** (*Optional*): Maximum time to wait for a response to a query sent to the 4Heat controller. Defaults to `300`. Must be between `100` and `2500`.
