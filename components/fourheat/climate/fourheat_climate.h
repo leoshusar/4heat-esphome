@@ -16,21 +16,21 @@ class FourHeatClimate : public climate::Climate, public Component {
 
   void set_fourheat_parent(FourHeat *parent);
 
-  void set_datapoint_id(const std::string datapoint_id);
-  void set_current_temperature_datapoint_id(const std::string datapoint_id);
-  void set_target_temperature_datapoint_id(const std::string datapoint_id);
-  void set_query_datapoint_id(const std::string datapoint_id);
-  void set_query_current_temperature_datapoint_id(const std::string datapoint_id);
-  void set_query_target_temperature_datapoint_id(const std::string datapoint_id);
+  void set_datapoint_id(std::string datapoint_id);
+  void set_current_temperature_datapoint_id(std::string datapoint_id);
+  void set_target_temperature_datapoint_id(std::string datapoint_id);
+  void set_query_datapoint_id(std::string datapoint_id);
+  void set_query_current_temperature_datapoint_id(std::string datapoint_id);
+  void set_query_target_temperature_datapoint_id(std::string datapoint_id);
 
   void set_parser(const parser_t<bool> &parser);
   void set_current_temperature_parser(const parser_t<int> &parser);
   void set_target_temperature_parser(const parser_t<int> &parser);
   
-  void set_on_datapoint_id(const std::string datapoint_id);
-  void set_off_datapoint_id(const std::string datapoint_id);
-  void set_on_data(const std::string data);
-  void set_off_data(const std::string data);
+  void set_on_datapoint_id(std::string datapoint_id);
+  void set_off_datapoint_id(std::string datapoint_id);
+  void set_on_data(std::string data);
+  void set_off_data(std::string data);
 
  protected:
   FourHeat *parent_;

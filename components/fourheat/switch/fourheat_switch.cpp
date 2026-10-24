@@ -27,15 +27,15 @@ void FourHeatSwitch::dump_config() {
 }
 
 void FourHeatSwitch::set_fourheat_parent(FourHeat *parent) { this->parent_ = parent; }
-void FourHeatSwitch::set_datapoint_id(const std::string datapoint_id) { this->datapoint_id_ = datapoint_id; }
-void FourHeatSwitch::set_query_datapoint_id(const std::string datapoint_id) { this->query_datapoint_id_ = datapoint_id; }
+void FourHeatSwitch::set_datapoint_id(std::string datapoint_id) { this->datapoint_id_ = std::move(datapoint_id); }
+void FourHeatSwitch::set_query_datapoint_id(std::string datapoint_id) { this->query_datapoint_id_ = std::move(datapoint_id); }
 
 void FourHeatSwitch::set_parser(const parser_t<bool> &parser) { this->parser_ = parser; }
 
-void FourHeatSwitch::set_on_datapoint_id(const std::string datapoint_id) { this->on_datapoint_id_ = datapoint_id; }
-void FourHeatSwitch::set_off_datapoint_id(const std::string datapoint_id) { this->off_datapoint_id_ = datapoint_id; }
-void FourHeatSwitch::set_on_data(const std::string data) { this->on_data_ = data; }
-void FourHeatSwitch::set_off_data(const std::string data) { this->off_data_ = data; }
+void FourHeatSwitch::set_on_datapoint_id(std::string datapoint_id) { this->on_datapoint_id_ = std::move(datapoint_id); }
+void FourHeatSwitch::set_off_datapoint_id(std::string datapoint_id) { this->off_datapoint_id_ = std::move(datapoint_id); }
+void FourHeatSwitch::set_on_data(std::string data) { this->on_data_ = std::move(data); }
+void FourHeatSwitch::set_off_data(std::string data) { this->off_data_ = std::move(data); }
 
 void FourHeatSwitch::write_state(bool state) {
   ESP_LOGV(TAG, "Setting switch %s: %s", this->datapoint_id_.c_str(), ONOFF(state));

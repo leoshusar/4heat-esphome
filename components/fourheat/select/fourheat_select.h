@@ -18,12 +18,12 @@ class FourHeatSelect : public select::Select, public Component {
 
   void set_fourheat_parent(FourHeat *parent);
   void set_optimistic(bool optimistic);
-  void set_datapoint_id(const std::string datapoint_id);
-  void set_query_datapoint_id(const std::string datapoint_id);
+  void set_datapoint_id(std::string datapoint_id);
+  void set_query_datapoint_id(std::string datapoint_id);
 
   void set_parser(const parser_t<int> &parser);
   
-  void set_options(const std::map<int, std::string> options);
+  void set_options(std::map<int, std::string> options);
 
  protected:
   FourHeat *parent_;

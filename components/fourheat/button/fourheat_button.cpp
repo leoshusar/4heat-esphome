@@ -13,9 +13,9 @@ void FourHeatButton::dump_config() {
 }
 
 void FourHeatButton::set_fourheat_parent(FourHeat *parent) { this->parent_ = parent; }
-void FourHeatButton::set_datapoint_id(const std::string datapoint_id) { this->datapoint_id_ = datapoint_id; }
+void FourHeatButton::set_datapoint_id(std::string datapoint_id) { this->datapoint_id_ = std::move(datapoint_id); }
 
-void FourHeatButton::set_press_data(const std::string press_data) { this->press_data_ = press_data; }
+void FourHeatButton::set_press_data(std::string press_data) { this->press_data_ = std::move(press_data); }
 
 void FourHeatButton::press_action() {
   ESP_LOGV(TAG, "Button %s pressed", this->datapoint_id_.c_str());

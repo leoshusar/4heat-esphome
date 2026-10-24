@@ -23,8 +23,8 @@ void FourHeatBinarySensor::dump_config() {
 }
 
 void FourHeatBinarySensor::set_fourheat_parent(FourHeat *parent) { this->parent_ = parent; }
-void FourHeatBinarySensor::set_datapoint_id(const std::string datapoint_id) { this->datapoint_id_ = datapoint_id; }
-void FourHeatBinarySensor::set_query_datapoint_id(const std::string datapoint_id) { this->query_datapoint_id_ = datapoint_id; }
+void FourHeatBinarySensor::set_datapoint_id(std::string datapoint_id) { this->datapoint_id_ = std::move(datapoint_id); }
+void FourHeatBinarySensor::set_query_datapoint_id(std::string datapoint_id) { this->query_datapoint_id_ = std::move(datapoint_id); }
 
 void FourHeatBinarySensor::set_parser(const parser_t<bool> &parser) { this->parser_ = parser; }
 
