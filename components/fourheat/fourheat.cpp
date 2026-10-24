@@ -7,12 +7,6 @@ namespace fourheat {
 
 static const char *const TAG = "fourheat";
 
-static const uint16_t TX_THROTTLE = 10;
-static const uint16_t RX_TIMEOUT = 100;
-static const uint16_t RESPONSE_TIMEOUT = 300;
-static const uint16_t RETRY_THROTTLE = 1000;
-static const uint8_t MAX_RETRY_COUNT = 3;
-
 static const uint8_t ID_LENGTH = 6;
 static const uint8_t DATA_LENGTH = 12;
 static const uint8_t MESSAGE_LENGTH = ID_LENGTH + DATA_LENGTH + 2;
@@ -24,7 +18,7 @@ void FourHeat::loop() {
     this->handle_char_(c);
   }
 
-  if (!this->rx_message_.empty() && millis() - this->last_rx_char_timestamp_ > RX_TIMEOUT) {
+  if (!this->rx_message_.empty() && millis() - this->last_rx_char_timestamp_ > this->rx_timeout_) {
     ESP_LOGW(TAG, "Received incomplete data: %s", format_hex_pretty(this->rx_message_).c_str());
     this->rx_message_.clear();
   }
@@ -53,6 +47,12 @@ void FourHeat::set_module_offline_sensor(binary_sensor::BinarySensor *module_off
   this->module_offline_sensor_ = module_offline_sensor;
 }
 #endif
+
+void FourHeat::set_tx_throttle(uint16_t tx_throttle) { this->tx_throttle_ = tx_throttle; }
+void FourHeat::set_rx_timeout(uint16_t rx_timeout) { this->rx_timeout_ = rx_timeout; }
+void FourHeat::set_response_timeout(uint16_t response_timeout) { this->response_timeout_ = response_timeout; }
+void FourHeat::set_retry_throttle(uint16_t retry_throttle) { this->retry_throttle_ = retry_throttle; }
+void FourHeat::set_max_retry_count(uint8_t max_retry_count) { this->max_retry_count_ = max_retry_count; }
 
 void FourHeat::register_query(const std::string &id) {
   std::vector<uint8_t> data;
@@ -170,20 +170,20 @@ void FourHeat::handle_message_() {
 void FourHeat::process_next_tx_message_() {
   auto now = millis();
 
-  if (now - this->last_tx_message_timestamp_ < TX_THROTTLE) {
+  if (now - this->last_tx_message_timestamp_ < this->tx_throttle_) {
     return;
   }
 
   if (this->awaiting_response_) {
-    if (now - this->last_tx_message_timestamp_ < RESPONSE_TIMEOUT) {
+    if (now - this->last_tx_message_timestamp_ < this->response_timeout_) {
       return;
     }
 
     this->awaiting_response_ = false;
 
     if (!this->module_offline_) {
-      if (this->current_retry_count_ < MAX_RETRY_COUNT) {
-        ESP_LOGW(TAG, "Response timeout, retrying (%d/%d)", this->current_retry_count_, MAX_RETRY_COUNT);
+      if (this->current_retry_count_ < this->max_retry_count_) {
+        ESP_LOGW(TAG, "Response timeout, retrying (%d/%d)", this->current_retry_count_, this->max_retry_count_);
         this->current_retry_count_++;
       } else {
         ESP_LOGW(TAG, "Response timeout, giving up");
@@ -197,7 +197,7 @@ void FourHeat::process_next_tx_message_() {
     }
   }
 
-  if (this->module_offline_ && now - this->last_tx_message_timestamp_ < RETRY_THROTTLE) {
+  if (this->module_offline_ && now - this->last_tx_message_timestamp_ < this->retry_throttle_) {
     return;
   }
 
