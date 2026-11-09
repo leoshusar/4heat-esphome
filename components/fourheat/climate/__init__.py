@@ -76,7 +76,7 @@ async def to_code(config):
         cg.add(var.set_query_target_temperature_datapoint_id(config[CONF_QUERY_TARGET_TEMPERATURE_DATAPOINT]))
     
     if CONF_PARSER in config:
-        lambda_ = await get_parser_expression(config[CONF_CURRENT_TEMPERATURE_PARSER], bool)
+        lambda_ = await get_parser_expression(config[CONF_PARSER], bool)
         cg.add(var.set_parser(lambda_))
 
     if CONF_CURRENT_TEMPERATURE_PARSER in config:
