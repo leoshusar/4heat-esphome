@@ -31,6 +31,13 @@ class FourHeat : public PollingComponent, public uart::UARTDevice {
 #ifdef USE_BINARY_SENSOR
   void set_module_offline_sensor(binary_sensor::BinarySensor *module_offline_sensor);
 #endif
+
+  void set_tx_throttle(uint16_t tx_throttle);
+  void set_rx_timeout(uint16_t rx_timeout);
+  void set_response_timeout(uint16_t response_timeout);
+  void set_retry_throttle(uint16_t retry_throttle);
+  void set_max_retry_count(uint8_t max_retry_count);
+
   void register_query(const std::string &id);
   void register_listener(const std::string &id, const std::function<void(const std::vector<uint8_t>)> &func);
 
@@ -44,6 +51,12 @@ class FourHeat : public PollingComponent, public uart::UARTDevice {
 #ifdef USE_BINARY_SENSOR
   binary_sensor::BinarySensor *module_offline_sensor_{nullptr};
 #endif
+
+  uint16_t tx_throttle_{10};
+  uint16_t rx_timeout_{100};
+  uint16_t response_timeout_{300};
+  uint16_t retry_throttle_{1000};
+  uint8_t max_retry_count_{3};
 
   uint32_t last_rx_char_timestamp_{0};
   uint32_t last_tx_message_timestamp_{0};
