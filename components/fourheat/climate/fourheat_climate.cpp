@@ -89,8 +89,7 @@ void FourHeatClimate::control(const climate::ClimateCall &call) {
 
 climate::ClimateTraits FourHeatClimate::traits() {
   auto traits = climate::ClimateTraits();
-  traits.set_supports_action(true);
-  traits.set_supports_current_temperature(true);
+  traits.add_feature_flags(climate::CLIMATE_SUPPORTS_ACTION | climate::CLIMATE_SUPPORTS_CURRENT_TEMPERATURE);
   traits.add_supported_mode(climate::CLIMATE_MODE_HEAT);
   traits.add_supported_mode(climate::CLIMATE_MODE_OFF);
   return traits;
