@@ -19,7 +19,7 @@ void FourHeat::loop() {
   }
 
   if (!this->rx_message_.empty() && millis() - this->last_rx_char_timestamp_ > this->rx_timeout_) {
-    ESP_LOGW(TAG, "Received incomplete data: %s", format_hex_pretty(this->rx_message_).c_str());
+    { char hex_buf[256]; ESP_LOGW(TAG, "Received incomplete data: %s", format_hex_pretty_to(hex_buf, this->rx_message_.data(), this->rx_message_.size())); }
     this->rx_message_.clear();
   }
 
@@ -75,7 +75,7 @@ void FourHeat::register_listener(const std::string &id, const std::function<void
 }
 
 void FourHeat::send_raw_value(const std::vector<uint8_t> &value) {
-  ESP_LOGV(TAG, "Sending raw data: %s", format_hex_pretty(value).c_str());
+  { char hex_buf[256]; ESP_LOGV(TAG, "Sending raw data: %s", format_hex_pretty_to(hex_buf, value.data(), value.size())); }
   this->tx_queue_.push(value);
 }
 
@@ -86,7 +86,7 @@ void FourHeat::send_bytes_value(const std::string &id, const std::vector<uint8_t
     return;
   }
 
-  ESP_LOGV(TAG, "Queueing data: %s", format_hex_pretty(data).c_str());
+  { char hex_buf[256]; ESP_LOGV(TAG, "Queueing data: %s", format_hex_pretty_to(hex_buf, data.data(), data.size())); }
   this->tx_queue_.push(data);
 }
 
@@ -138,7 +138,7 @@ void FourHeat::handle_message_() {
   auto &data = this->rx_message_;
 
   if (data.size() != 18) {
-    ESP_LOGW(TAG, "Received invalid data: %s", format_hex_pretty(data).c_str());
+    { char hex_buf[256]; ESP_LOGW(TAG, "Received invalid data: %s", format_hex_pretty_to(hex_buf, data.data(), data.size())); }
     return;
   }
 
@@ -151,7 +151,7 @@ void FourHeat::handle_message_() {
   auto id = std::string(data.begin(), it);
   auto value = std::vector<uint8_t>(it, data.end());
 
-  ESP_LOGV(TAG, "Received data for %s: %s", id.c_str(), format_hex_pretty(value).c_str());
+  { char hex_buf[256]; ESP_LOGV(TAG, "Received data for %s: %s", id.c_str(), format_hex_pretty_to(hex_buf, value.data(), value.size())); }
 
   bool handled = false;
 
@@ -163,7 +163,7 @@ void FourHeat::handle_message_() {
   }
 
   if (!handled) {
-    ESP_LOGD(TAG, "Listener for %s not found. Data: %s", id.c_str(), format_hex_pretty(value).c_str());
+    { char hex_buf[256]; ESP_LOGD(TAG, "Listener for %s not found. Data: %s", id.c_str(), format_hex_pretty_to(hex_buf, value.data(), value.size())); }
   }
 }
 
@@ -204,15 +204,15 @@ void FourHeat::process_next_tx_message_() {
   auto &data = this->tx_message_;
 
   if (!data.empty()) {
-    ESP_LOGV(TAG, "Resending data: %s", format_hex_pretty(data).c_str());
+    { char hex_buf[256]; ESP_LOGV(TAG, "Resending data: %s", format_hex_pretty_to(hex_buf, data.data(), data.size())); }
   } else if (!this->tx_queue_.empty()) {
     data = this->tx_queue_.front();
     this->tx_queue_.pop();
 
-    ESP_LOGV(TAG, "Sending data: %s", format_hex_pretty(data).c_str());
+    { char hex_buf[256]; ESP_LOGV(TAG, "Sending data: %s", format_hex_pretty_to(hex_buf, data.data(), data.size())); }
   } else if (this->last_sent_query_index_ < this->queries_.size()) {
     data = this->queries_[this->last_sent_query_index_];
-    ESP_LOGV(TAG, "Sending query (index %d): %s", this->last_sent_query_index_, format_hex_pretty(data).c_str());
+    { char hex_buf[256]; ESP_LOGV(TAG, "Sending query (index %d): %s", this->last_sent_query_index_, format_hex_pretty_to(hex_buf, data.data(), data.size())); }
 
     this->last_sent_query_index_++;
   } else {
@@ -228,7 +228,7 @@ void FourHeat::process_next_tx_message_() {
 
 bool FourHeat::create_message_(const std::string &id, const std::vector<uint8_t> &value, std::vector<uint8_t> &message) {
   if (value.size() > DATA_LENGTH) {
-    ESP_LOGW(TAG, "Value too long: %s", format_hex_pretty(value).c_str());
+    { char hex_buf[256]; ESP_LOGW(TAG, "Value too long: %s", format_hex_pretty_to(hex_buf, value.data(), value.size())); }
     return false;
   }
 
