@@ -61,7 +61,8 @@ void FourHeatSwitch::handle_data_(const std::vector<uint8_t> &data) {
   auto parsed = parse<bool>(this->parser_, data);
 
   if (!parsed.has_value()) {
-    ESP_LOGW(TAG, "Received invalid data for switch %s: %s", this->datapoint_id_.c_str(), format_hex_pretty(data).c_str());
+    char hex_buf[256];
+    ESP_LOGW(TAG, "Received invalid data for switch %s: %s", this->datapoint_id_.c_str(), format_hex_pretty_to(hex_buf, data.data(), data.size()));
     return;
   }
 
