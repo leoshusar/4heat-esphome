@@ -99,7 +99,8 @@ void FourHeatClimate::handle_state_data_(const std::vector<uint8_t> &data) {
   auto parsed = parse<bool>(this->parser_, data);
 
   if (!parsed.has_value()) {
-    ESP_LOGW(TAG, "Received invalid data for climate %s: %s", this->datapoint_id_.c_str(), format_hex_pretty(data).c_str());
+    char hex_buf[256];
+    ESP_LOGW(TAG, "Received invalid data for climate %s: %s", this->datapoint_id_.c_str(), format_hex_pretty_to(hex_buf, data.data(), data.size()));
     return;
   }
 
@@ -115,7 +116,8 @@ void FourHeatClimate::handle_current_temperature_data_(const std::vector<uint8_t
   auto parsed = parse<int>(this->current_temperature_parser_, data);
 
   if (!parsed.has_value()) {
-    ESP_LOGW(TAG, "Received invalid data for climate %s: %s", this->current_temperature_datapoint_id_.c_str(), format_hex_pretty(data).c_str());
+    char hex_buf[256];
+    ESP_LOGW(TAG, "Received invalid data for climate %s: %s", this->current_temperature_datapoint_id_.c_str(), format_hex_pretty_to(hex_buf, data.data(), data.size()));
     return;
   }
 
@@ -131,7 +133,8 @@ void FourHeatClimate::handle_target_temperature_data_(const std::vector<uint8_t>
   auto parsed = parse<int>(this->target_temperature_parser_, data);
 
   if (!parsed.has_value()) {
-    ESP_LOGW(TAG, "Received invalid data for climate %s: %s", this->target_temperature_datapoint_id_.c_str(), format_hex_pretty(data).c_str());
+    char hex_buf[256];
+    ESP_LOGW(TAG, "Received invalid data for climate %s: %s", this->target_temperature_datapoint_id_.c_str(), format_hex_pretty_to(hex_buf, data.data(), data.size()));
     return;
   }
 

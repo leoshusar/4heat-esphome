@@ -32,7 +32,8 @@ void FourHeatSensor::handle_data_(const std::vector<uint8_t> &data) {
   auto parsed = parse<int>(this->parser_, data);
 
   if (!parsed.has_value()) {
-    { char hex_buf[256]; ESP_LOGW(TAG, "Received invalid data for sensor %s: %s", this->datapoint_id_.c_str(), format_hex_pretty_to(hex_buf, data.data(), data.size())); }
+    char hex_buf[256];
+    ESP_LOGW(TAG, "Received invalid data for sensor %s: %s", this->datapoint_id_.c_str(), format_hex_pretty_to(hex_buf, data.data(), data.size()));
     return;
   }
 
